@@ -1,40 +1,43 @@
+import pytest
 
-class Category:
-    """Класс категорий: наименование, описание, товар (+подсчёт всего категорий и продуктов)"""
-    name: str
-    description: str
-    product: list
-    all_category = 0
-    unique_products_count = 0
-
-    def __init__(self, name, description, product):
-        self.name = name
-        self.description = description
-        self.product = product
-
-        Category.all_category += 1
-
-        Category.unique_products_count += Category.unique_products(self.product)
-
-    @classmethod
-    def unique_products(cls, product: list) -> int:
-        set_names = []
-        for product_ in product:
-            if str(product_.title) not in set_names:
-                set_names.append(product_.title)
-        return len(set_names)
+from src.functions import Category, Product
 
 
-class Product:
-    """Класс товаров: наименование, описание, цена, количество"""
-    name: str
-    description: str
-    price: float
-    quantity: int
+@pytest.fixture
+def category_name():
+    """Проверка инициализации объектов класса Category"""
+    return Category("имя", "описание", ["продукт", "продукт2"])
 
-    def __init__(self, name, description, price, quantity):
-        self.name = name
-        self.description = description
-        self.price = price
-        self.quantity = quantity
 
+def test_init_category(category_name):
+    assert category_name.name == "имя"
+    assert category_name.description == "описание"
+    assert category_name.products == ["продукт", "продукт2"]
+    assert category_name.all_category == 1
+    assert category_name.unique_products_count == 2
+
+
+"""Проверка инициализации объектов класса Product"""
+
+
+@pytest.fixture
+def product_category():
+    return Product("имя", "описание", 134.50, 3)
+
+
+def test_init_product(product_category):
+    assert product_category.price == 134.50
+    assert product_category.quantity == 3
+    assert product_category.name == "имя"
+    assert product_category.description == "описание"
+
+
+def test_category_count():
+    """Проверка подсчёта"""
+    assert Category.all_category == 1
+
+    Category("name", "description", ["apple", "pine"])
+    assert Category.all_category == 2
+
+    Category("name_1", "description", ["apple", "pine", "pine"])
+    assert Category.all_category == 3
