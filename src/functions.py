@@ -22,33 +22,36 @@ class Category:
                 set_names.append(product_.title)
         return len(set_names)
 
-    """Для следующего метода"""
 
     @property
     def products(self):
+        """Для следующего метода"""
         return self.__products
 
-    """достаёт параметры товара из класса продукт"""
 
     @property
     def products_list(self):
+        """достаёт параметры товара из класса продукт"""
         product_items = []
         for item in self.__products:
             product_items = Product(item.name, item.description, item.price, item.quantity)
         return product_items
 
-    """добавляет продукт"""
 
     @products.setter
     def products(self, product_list):
+        """добавляет продукт"""
         self.__products.append(product_list)
 
-    """выводит Продукт, 80 руб. Остаток: 15 шт."""
 
     @property
     def product_stat(self):
+        """выводит Продукт, 80 руб. Остаток: 15 шт."""
+        result = ''
         for item in self.__products:
-            return f"{item.name}, {item.price} руб. Остаток: {item.quantity} шт."
+            print(item)
+            result += f'{item.name}, {item.request_price} руб. Остаток: {item.quantity} шт.\n'
+        return result
 
 
 class Product:
@@ -64,37 +67,28 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-    """Геттер для цены"""
 
     @property
     def price(self):
+        """Геттер для цены"""
         return self.__price
 
-    """Ввод нового продукта"""
 
-    @property
-    def get_items(self):
-        items = []
-        product_name = input("Введите наименование: ")
-        product_description = input("Введите описание: ")
-        product_price = input("Укажите цену: ")
-        product_quantity = input("Укажите количество: ")
-        items.append(product_name + product_description + product_price + product_quantity)
-        return items
-
-    """Добавление нового продукта"""
 
     @classmethod
-    def product(cls, get_items):
-        items = get_items()
-        name, description, price, quantity = items
-        return cls(name, description, price, quantity)
+    def new_product(cls, product_data: dict):
+        """Добавление нового продукта"""
+        return cls(**product_data)
 
-    """проверка цены"""
 
     @price.setter
     def price(self, price):
-        self.price = price
+        """проверка цены"""
+        if self.price > 0:
+            self.__price = price
+        else:
+            print("Цена введена некорректно")
+            return False
 
     @price.deleter
     def price(self):
