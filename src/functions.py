@@ -25,23 +25,17 @@ class Category:
 
     @property
     def products(self):
-        """Для следующего метода"""
-        return self.__products
-
-
-    @property
-    def products_list(self):
-        """достаёт параметры товара из класса продукт"""
-        product_items = []
-        for item in self.__products:
-            product_items = Product(item.name, item.description, item.price, item.quantity)
-        return product_items
+        """вывод списка"""
+        result = ''
+        for product in self.__products:
+            result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
+        return result
 
 
     @products.setter
-    def products(self, product_list):
+    def products(self, product):
         """добавляет продукт"""
-        self.__products.append(product_list)
+        self.__products.append(product)
 
 
     @property
@@ -50,7 +44,7 @@ class Category:
         result = ''
         for item in self.__products:
             print(item)
-            result += f'{item.name}, {item.request_price} руб. Остаток: {item.quantity} шт.\n'
+            result += f'{item.name}, {item.price} руб. Остаток: {item.quantity} шт.\n'
         return result
 
 
@@ -88,7 +82,7 @@ class Product:
             self.__price = price
         else:
             print("Цена введена некорректно")
-            return False
+
 
     @price.deleter
     def price(self):
