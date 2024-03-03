@@ -22,11 +22,11 @@ class Category:
         return f"{self.name}, количество продуктов: {len(Category(self.name, self.description, self.products))}"
 
     @classmethod
-    def unique_products(cls, __products: list) -> int:
+    def unique_products(cls, products: list) -> int:
         set_names = []
-        for product_ in __products:
-            if str(product_.title) not in set_names:
-                set_names.append(product_.title)
+        for product in products:
+            if str(product) not in set_names:
+                set_names.append(product)
         return len(set_names)
 
     @property
