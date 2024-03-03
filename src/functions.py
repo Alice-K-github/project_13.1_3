@@ -14,6 +14,13 @@ class Category:
         Category.all_category += 1
         Category.unique_products_count += Category.unique_products(self.__products)
 
+    def __len__(self):
+        return len(self.__products)
+
+    def __str__(self):
+        """Название продукта, количество продуктов: 200шт"""
+        return f"{self.name}, количество продуктов: {len(Category(self.name, self.description, self.products))}"
+
     @classmethod
     def unique_products(cls, __products: list) -> int:
         set_names = []
@@ -21,7 +28,6 @@ class Category:
             if str(product_.title) not in set_names:
                 set_names.append(product_.title)
         return len(set_names)
-
 
     @property
     def products(self):
@@ -31,21 +37,16 @@ class Category:
             result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
         return result
 
-
     @products.setter
     def products(self, product):
         """добавляет продукт"""
         self.__products.append(product)
 
-
     @property
     def product_stat(self):
         """выводит Продукт, 80 руб. Остаток: 15 шт."""
-        result = ''
-        for item in self.__products:
-            print(item)
-            result += f'{item.name}, {item.price} руб. Остаток: {item.quantity} шт.\n'
-        return result
+        for product in self.__products:
+            return Product(product.name, product.description, product.price, product.quantity)
 
 
 class Product:
@@ -61,19 +62,22 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __add__(self, other):
+        return (self.price * self.quantity) + (other.price * other.quantity)
+
+    def __str__(self):
+        """Выводит инф-цю типа "Название продукта, 80 руб. Остаток: 15 шт.\""""
+        return f"{self.name}, {str(self.__price)} руб. Остаток: {str(self.quantity)} шт."
 
     @property
     def price(self):
         """Геттер для цены"""
         return self.__price
 
-
-
     @classmethod
     def new_product(cls, product_data: dict):
         """Добавление нового продукта"""
         return cls(**product_data)
-
 
     @price.setter
     def price(self, price):
@@ -83,11 +87,7 @@ class Product:
         else:
             print("Цена введена некорректно")
 
-
     @price.deleter
     def price(self):
         if int(self.__price) <= 0:
             print("Цена введена некорректно")
-            return False
-        else:
-            return True
