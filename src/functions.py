@@ -91,3 +91,24 @@ class Product:
     def price(self):
         if int(self.__price) <= 0:
             print("Цена введена некорректно")
+
+
+
+class Smartphone(Product):
+    """Класс Смартфон (дочерний от Product): производительность, модель, объём вн. памяти, цвет"""
+    def __init__(self, name, description, price, quantity, performance, model, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.performance = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class Lawn_grass(Product):
+    """Класс Трава_газонная (дочерний от Product): страна-производитель, срок прорастания, цвет."""
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
