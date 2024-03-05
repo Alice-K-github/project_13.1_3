@@ -40,6 +40,8 @@ class Category:
     @products.setter
     def products(self, product):
         """добавляет продукт"""
+        if not isinstance(product, Product):
+            raise TypeError("Добавлять можно только объекты Product или его наследников")
         self.__products.append(product)
 
     @property
@@ -63,6 +65,8 @@ class Product:
         self.quantity = quantity
 
     def __add__(self, other):
+        if not isinstance(other, type(self)):
+            raise ValueError("Продукты должны быть из одного класса.")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
     def __str__(self):
@@ -91,3 +95,24 @@ class Product:
     def price(self):
         if int(self.__price) <= 0:
             print("Цена введена некорректно")
+
+
+
+class Smartphone(Product):
+    """Класс Смартфон (дочерний от Product): производительность, модель, объём вн. памяти, цвет"""
+    def __init__(self, name, description, price, quantity, performance, model, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.performance = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class Lawn_grass(Product):
+    """Класс Трава_газонная (дочерний от Product): страна-производитель, срок прорастания, цвет."""
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
