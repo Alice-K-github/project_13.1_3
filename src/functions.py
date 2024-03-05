@@ -40,6 +40,8 @@ class Category:
     @products.setter
     def products(self, product):
         """добавляет продукт"""
+        if not isinstance(product, Product):
+            raise TypeError("Добавлять можно только объекты Product или его наследников")
         self.__products.append(product)
 
     @property
@@ -63,6 +65,8 @@ class Product:
         self.quantity = quantity
 
     def __add__(self, other):
+        if not isinstance(other, type(self)):
+            raise ValueError("Продукты должны быть из одного класса.")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
     def __str__(self):
