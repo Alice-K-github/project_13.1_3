@@ -19,7 +19,7 @@ class Category:
 
     def __str__(self):
         """Название продукта, количество продуктов: 200шт"""
-        return f"{self.name}, количество продуктов: {len(Category(self.name, self.description, self.products))}"
+        return f"{self.name}, количество продуктов: {len(self)}"
 
     @classmethod
     def unique_products(cls, products: list) -> int:
