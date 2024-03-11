@@ -66,7 +66,7 @@ class Product:
         self.quantity = quantity
 
     def __add__(self, other):
-        if not isinstance(type(other), type(self)):
+        if not type(self) == type(other) :
             raise ValueError("Продукты должны быть из одного класса.")
         else:
             return (self.price * self.quantity) + (other.price * other.quantity)
