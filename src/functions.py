@@ -1,3 +1,24 @@
+from abc import ABC, abstractmethod
+
+
+class Basic(ABC):
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class Enter_info:
+
+    def __init__(self, product, description, price, quantity):
+        self.product = product
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.product}, {self.description}, {self.price}, {self.quantity})"
+
+
 class Category:
     """Класс категорий: наименование, описание, товар (+подсчёт всего категорий и продуктов)"""
     name: str
@@ -52,7 +73,7 @@ class Category:
             return Product(product.name, product.description, product.price, product.quantity)
 
 
-class Product:
+class Product(Basic, Enter_info):
     """Класс товаров: наименование, описание, цена, количество"""
     name: str
     description: str
@@ -60,13 +81,14 @@ class Product:
     quantity: int
 
     def __init__(self, name, description, price, quantity):
+        super().__init__()
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
 
     def __add__(self, other):
-        if not type(self) == type(other) :
+        if not type(self) == type(other):
             raise ValueError("Продукты должны быть из одного класса.")
         else:
             return (self.price * self.quantity) + (other.price * other.quantity)
@@ -98,6 +120,9 @@ class Product:
         if int(self.__price) <= 0:
             print("Цена введена некорректно")
 
+    def func(self):
+        pass
+
 
 class Smartphone(Product):
     """Класс Смартфон (дочерний от Product): производительность, модель, объём вн. памяти, цвет"""
@@ -109,6 +134,10 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
+    def __str__(self):
+        """Выводит инф-цю типа "Название продукта, 80 руб. Остаток: 15 шт.\""""
+        return f"{self.name}, {str(self.__price)} руб. Остаток: {str(self.quantity)} шт."
+
 
 class Lawn_grass(Product):
     """Класс Трава_газонная (дочерний от Product): страна-производитель, срок прорастания, цвет."""
@@ -118,3 +147,7 @@ class Lawn_grass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+    def __str__(self):
+        """Выводит инф-цю типа "Название продукта, 80 руб. Остаток: 15 шт.\""""
+        return f"{self.name}, {str(self.__price)} руб. Остаток: {str(self.quantity)} шт."
