@@ -6,6 +6,10 @@ class Basic(ABC):
     def __str__(self):
         pass
 
+    @abstractmethod
+    def new_product(self, *args):
+        pass
+
 
 class Enter_info:
 
