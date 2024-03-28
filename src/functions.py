@@ -76,6 +76,21 @@ class Category:
         for product in self.__products:
             return Product(product.name, product.description, product.price, product.quantity)
 
+    def average_price(self, products):
+        all_price = 0
+        price_count = 0
+        for price in products:
+            all_price += price
+            price_count += 1
+        try:
+            all_price/price_count
+        except ZeroDivisionError:
+            return 0
+        else:
+            return all_price/price_count
+
+
+
 
 class Product(Basic, Enter_info):
     """Класс товаров: наименование, описание, цена, количество"""
@@ -94,6 +109,8 @@ class Product(Basic, Enter_info):
     def __add__(self, other):
         if not type(self) == type(other):
             raise ValueError("Продукты должны быть из одного класса.")
+        elif self.quantity == 0:
+            raise ZeroDivisionError("Количество не может быть равно нулю.")
         else:
             return (self.price * self.quantity) + (other.price * other.quantity)
 
