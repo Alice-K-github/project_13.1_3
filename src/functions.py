@@ -67,6 +67,8 @@ class Category:
         """добавляет продукт"""
         if not isinstance(product, Product):
             raise TypeError("Добавлять можно только объекты Product или его наследников")
+        elif product.quantity == 0:
+            raise ValueError("Нельзя добавить товар с нулевым количеством.")
         else:
             self.__products.append(product)
 
@@ -79,16 +81,16 @@ class Category:
     def average_price(self, products):
         all_price = 0
         price_count = 0
-        all_products = len(products)
         for product in products:
             all_price += product.price
             price_count += product.quantity
+        total_price = sum([product.price for product in self.__products]) / len(self)
         try:
-            all_price/(price_count*all_products)
+            total_price
         except ZeroDivisionError:
             return 0
         else:
-            return all_price/(price_count*all_products)
+            return total_price
 
 
 
