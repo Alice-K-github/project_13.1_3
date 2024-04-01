@@ -39,8 +39,12 @@ class Category:
         Category.all_category += 1
         Category.unique_products_count += Category.unique_products(self.__products)
 
-    def __len__(self):
-        return len(self.__products)
+    def __len__(self, products):
+        count = 0
+        for product in products:
+            count += product.quantity
+        return count
+
 
     def __str__(self):
         """Название продукта, количество продуктов: 200шт"""
@@ -79,11 +83,6 @@ class Category:
             return Product(product.name, product.description, product.price, product.quantity)
 
     def average_price(self, products):
-        all_price = 0
-        price_count = 0
-        for product in products:
-            all_price += product.price
-            price_count += product.quantity
         total_price = sum([product.price for product in self.__products]) / len(self)
         try:
             total_price
