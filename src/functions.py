@@ -41,7 +41,7 @@ class Category:
 
     def __len__(self, products):
         count = 0
-        for product in products:
+        for product in self.__products:
             count += product.quantity
         return count
 
@@ -83,9 +83,8 @@ class Category:
             return Product(product.name, product.description, product.price, product.quantity)
 
     def average_price(self, products):
-        total_price = sum([product.price for product in self.__products]) / len(self)
         try:
-            total_price
+            total_price = sum([product.price for product in self.__products]) / len(self.__products)
         except ZeroDivisionError:
             return 0
         else:
